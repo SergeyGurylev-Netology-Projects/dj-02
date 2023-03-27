@@ -1,0 +1,66 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic Page Needs -->
+    <meta charset="utf-8">
+    <title>bus stations - page {{ page.number }} from {{ num_pages }}</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static "css/normalize.css" %}">
+    <link rel="stylesheet" href="{% static "css/skeleton.css" %}">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <table class="u-full-width">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Street</th>
+                <th>District</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for station in bus_stations %}
+                <tr>
+                    <td>{{ station.Name }}</td>
+                    <td>{{ station.Street }}</td>
+                    <td>{{ station.District }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% if page.has_previous %}
+            <a class="button button-primary" href="?page={{ page.previous_page_number }}">⟵</a>
+        {% endif %}
+        {% if 1 not in prev_numbers and page.number > 1 %}
+            <a class="button button-primary" href="?page=1">1</a>
+        {% endif %}
+        {% for num in prev_numbers %}
+            <a class="button button-primary" href="?page={{ num }}">{{ num }}</a>
+        {% endfor %}
+        <a class="button disabled" href="">{{ page.number }}</a>
+        {% for num in next_numbers %}
+            <a class="button button-primary" href="?page={{ num }}">{{ num }}</a>
+        {% endfor %}
+        {% if num_pages not in next_numbers and page.number < num_pages %}
+            <a class="button button-primary" href="?page={{ num_pages }}">{{ num_pages }}</a>
+        {% endif %}
+        {% if page.has_next %}
+            <a class="button button-primary" href="?page={{ page.next_page_number }}">⟶</a>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>
